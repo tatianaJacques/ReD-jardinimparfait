@@ -38,7 +38,6 @@ var createCube = function() {
     cube.position.z = 0;
 
     group.add(cube);
-
 }
 
 var render = function () {
