@@ -6,6 +6,7 @@ var renderer = new THREE.WebGLRenderer();
 var group = new THREE.Group();
 var controls;
 var texture;
+var newtexture;
 
 
 controls = new THREE.OrbitControls(camera);
@@ -16,6 +17,7 @@ camera.position.z = 50;
 document.body.appendChild(renderer.domElement);
 
 texture = new THREE.TextureLoader().load( './images/text1.jpg');
+newtexture = new THREE.TextureLoader().load( './images/text2.jpg');
 
 
 var createSphere = function() {
@@ -90,7 +92,13 @@ var render = function () {
             group.children[0].scale.y = 1;
             group.children[1].scale.x = 1;
             group.children[1].scale.y = 1;
+
+            group.children[1].material.map = newtexture;
+            group.children[1].material.map.needsUpdate = true;
         }
+
+
+
 
     }
 
