@@ -5,6 +5,8 @@ var camera = new THREE.PerspectiveCamera(50, $(window).width() / $(window).heigh
 var renderer = new THREE.WebGLRenderer();
 var group = new THREE.Group();
 var controls;
+var texture;
+
 
 controls = new THREE.OrbitControls(camera);
 controls.addEventListener('change', render);
@@ -13,11 +15,15 @@ camera.position.z = 50;
 
 document.body.appendChild(renderer.domElement);
 
-var createSphere = function() {
-    var geometry = new THREE.SphereGeometry( 1, 50, 50 );
-    var material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+texture = new THREE.TextureLoader().load( './images/text1.jpg');
 
-    var sphere = new THREE.Mesh( geometry, material );
+
+var createSphere = function() {
+    console.log(texture)
+    var geometry2 = new THREE.SphereGeometry( 1, 50, 50 );
+    var material2 = new THREE.MeshBasicMaterial( {map: texture} );
+
+    var sphere = new THREE.Mesh( geometry2, material2 );
 
     sphere.position.x =10;
     sphere.position.y = 10;
@@ -29,7 +35,7 @@ var createSphere = function() {
 
 var createCube = function() {
     var geometry2 = new THREE.BoxGeometry( 1, 1, 1 );
-    var material2 = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+    var material2 = new THREE.MeshBasicMaterial({map: texture} );
 
     var cube = new THREE.Mesh( geometry2, material2 );
 
@@ -42,7 +48,7 @@ var createCube = function() {
 
 var createCubix = function() {
     var geometry2 = new THREE.SphereGeometry( 1, 50, 50 );
-    var material2 = new THREE.MeshBasicMaterial( {color: 0x00ffff} );
+    var material2 = new THREE.MeshBasicMaterial( {map: texture} );
 
     var cube = new THREE.Mesh( geometry2, material2 );
 
@@ -60,8 +66,6 @@ var render = function () {
     if(typeof array === 'object' && array.length > 0) {
         var scale = boost * 0.02;
 		if(boost < 100) {
-    		console.log('1')
-
             group.children[1].scale.x = (scale < 1 ? 1 : scale);
             group.children[1].scale.y = (scale < 1 ? 1 : scale);
 
@@ -71,8 +75,6 @@ var render = function () {
             group.children[2].scale.y = 1;
 
 		}else if(boost > 100 && boost < 120){
-            console.log('2')
-
             group.children[0].scale.x = (scale < 1 ? 1 : scale);
             group.children[0].scale.y = (scale < 1 ? 1 : scale);
 
@@ -81,8 +83,6 @@ var render = function () {
             group.children[2].scale.x = 1;
             group.children[2].scale.y = 1;
 		} else {
-            console.log('3')
-
             group.children[2].scale.x = (scale < 1 ? 1 : scale);
             group.children[2].scale.y = (scale < 1 ? 1 : scale);
 
