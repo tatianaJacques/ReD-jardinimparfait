@@ -76,6 +76,21 @@ var createCubix = function() {
 
 }
 
+
+var createPlan = function() {
+    var geometry = new THREE.PlaneGeometry( 5, 2, 5 );
+    var material = new THREE.MeshBasicMaterial( {map: spriteMap, transparent: true, side: THREE.DoubleSide} );
+    var plane = new THREE.Mesh( geometry, material );
+
+    plane.position.x = 5;
+    plane.position.y = 5;
+    plane.position.z = 5;
+
+    group.add(plane);
+
+}
+
+
 var time = 0;
 var render = function () {
 
@@ -110,13 +125,15 @@ var render = function () {
             group.children[1].material.map = newtexture;
             group.children[1].material.map.needsUpdate = true;
         }
-        group.children[0].material.map.offset.x = time;
-		time += 0.001;
+
+        //change plan position - step .5 !!
+        //group.children[0].material.map.offset.x = time;
+		//time += 0.001;
     }
 
 
     requestAnimationFrame(render);
-    //controls.update();
+    controls.update();
     renderer.render(scene, camera);
 };
 
@@ -125,6 +142,7 @@ var createAll = function () {
     createSphere();
     createCube();
     createCubix();
+    createPlan();
 
     scene.add( group );
 
