@@ -19,11 +19,25 @@ document.body.appendChild(renderer.domElement);
 texture = new THREE.TextureLoader().load( './images/text1.jpg');
 newtexture = new THREE.TextureLoader().load( './images/text2.jpg');
 
+var spriteMap = new THREE.TextureLoader().load( './images/sprite/sprite.png' );
+
+/*
+
+var spriteMaterial = new THREE.SpriteMaterial( { map: spriteMap, color: 0xffffff } );
+var sprite = new THREE.Sprite( spriteMaterial );
+
+scene.add( sprite );
+*/
 
 var createSphere = function() {
-    console.log(texture)
+    spriteMap.offset.x = 0.5; // 0.0 - 1.0
+    spriteMap.offset.y = 0.5; // 0.0 - 1.0
+    spriteMap.repeat.set(0.5, 0.5);
+
+    //step .5 x ou y
+
     var geometry2 = new THREE.SphereGeometry( 1, 50, 50 );
-    var material2 = new THREE.MeshBasicMaterial( {map: texture} );
+    var material2 = new THREE.MeshBasicMaterial( {map: spriteMap, transparent: true, color: 0xffffff } );
 
     var sphere = new THREE.Mesh( geometry2, material2 );
 
@@ -63,6 +77,21 @@ var createCubix = function() {
 }
 
 
+var createPlan = function() {
+    var geometry = new THREE.PlaneGeometry( 5, 2, 5 );
+    var material = new THREE.MeshBasicMaterial( {map: spriteMap, transparent: true, side: THREE.DoubleSide} );
+    var plane = new THREE.Mesh( geometry, material );
+
+    plane.position.x = 5;
+    plane.position.y = 5;
+    plane.position.z = 5;
+
+    group.add(plane);
+
+}
+
+
+var time = 0;
 var render = function () {
 
     if(typeof array === 'object' && array.length > 0) {
@@ -97,9 +126,9 @@ var render = function () {
             group.children[1].material.map.needsUpdate = true;
         }
 
-
-
-
+        //change plan position - step .5 !!
+        //group.children[0].material.map.offset.x = time;
+		//time += 0.001;
     }
 
 
@@ -113,6 +142,7 @@ var createAll = function () {
     createSphere();
     createCube();
     createCubix();
+    createPlan();
 
     scene.add( group );
 
